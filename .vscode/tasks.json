@@ -6,11 +6,14 @@
             "command": "C:\\MinGW\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
-                "-Icomponents/hearers",
+                "-Iutility",
+                "-Itests",
+                "-Igates",
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                
             ],
             "options": {
                 "cwd": "${fileDirname}"

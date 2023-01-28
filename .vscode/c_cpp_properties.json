@@ -4,10 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/components/component",
-                "${workspaceFolder}/components/connector",
-                "${workspaceFolder}/components/input",
-                "${workspaceFolder}/components/gates/and"
+                "${workspaceFolder}/utility/**",
+                "${workspaceFolder}/test/**"
             ],
             "defines": [
                 "_DEBUG",

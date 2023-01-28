@@ -12,7 +12,7 @@ void inputArrayUtilityTest(){
     bool inputArray[length] = {1,0,1};
 
     InputArrayUtility* input = new InputArrayUtility(inputArray, length);
-    TEST<std::string>("Initialization InputArrayUtility", input->toString(), "101");
+    TEST<std::string>("Initialization InputArrayUtility test", input->toString(), "101");
 
     input = new InputArrayUtility(length);
     TEST<std::string>("Initialization empty InputArrayUtility test", input->toString(), "000");
