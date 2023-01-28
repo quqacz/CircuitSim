@@ -3,6 +3,8 @@
 
 #include "InputArrayUtility.h"
 
+// gate implements ( AB )
+
 class And{
     static const int inputSize = 2;
     static const int outputSize = 1;

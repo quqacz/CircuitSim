@@ -1,11 +1,13 @@
-#ifndef OR_GATE
-#define OR_GATE
+#ifndef NOR_GATE
+#define NOR_GATE
 
 #include "InputArrayUtility.h"
+#include "Not.h"
+#include "Or.h"
 
-// gate implements A + B
+// gate implements !(A + B)
 
-class Or{
+class Nor{
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -13,27 +15,48 @@ class Or{
     InputArrayUtility* input;
     InputArrayUtility* output;
 
+    Not* n_AoB;
+    Or* AoB;
+
+    void update(){
+        AoB->set(0, input->get(0));
+        AoB->set(1, input->get(1));
+
+        n_AoB->set(AoB->get());
+    }
+
     void propagate(){
-        output->set(0, input->get(0) || input->get(1));
+        output->set(0, n_AoB->get());
     }
 
     public:
 
-    Or(){
+    Nor(){
         input = new InputArrayUtility(inputSize);
         output = new InputArrayUtility(outputSize);
+
+        n_AoB = new Not();
+        AoB = new Or();
+        update();
         propagate();
     }
 
-    Or(bool inputValue[]){
+    Nor(bool inputValue[]){
         input = new InputArrayUtility(inputValue, inputSize);
         output = new InputArrayUtility(outputSize);
+
+        n_AoB = new Not();
+        AoB = new Or();
+        update();
         propagate();
     }
 
-    ~Or(){
+    ~Nor(){
         delete input;
         delete output;
+
+        delete AoB;
+        delete n_AoB;
     }
 
     bool get(){
@@ -45,11 +68,15 @@ class Or{
             throw std::invalid_argument("Requested invalid index");
         }
         input->set(index, value);
+
+        update();
         propagate();
     }
 
     void set(bool values[]){
         input->set(values);
+        
+        update();
         propagate();
     }
 
@@ -58,11 +85,11 @@ class Or{
     }
 
     static int getInputSize(){
-        return Or::inputSize;
+        return Nor::inputSize;
     }
 
     static int getOutputSize(){
-        return Or::outputSize;
+        return Nor::outputSize;
     }
 };
 

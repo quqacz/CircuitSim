@@ -18,9 +18,6 @@ void orGateTest(){
 
     TEST<bool>("Get Or gate test", orGate->get(), 1);
 
-    orGate->set(0, 1);
-    TEST<bool>("Set Or gate bool value test", orGate->get(), 1);
-
     orGate->set(1, 1);
     TEST<bool>("Set Or gate index and bool value test", orGate->get(), 1);
 

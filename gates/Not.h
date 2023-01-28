@@ -3,6 +3,8 @@
 
 #include "InputArrayUtility.h"
 
+// gate implements !A
+
 class Not{
     static const int inputSize = 1;
     static const int outputSize = 1;

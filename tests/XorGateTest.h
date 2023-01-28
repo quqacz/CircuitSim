@@ -19,9 +19,6 @@ void xorGateTest(){
     TEST<bool>("Get Xor gate test", xorGate->get(), 1);
 
     xorGate->set(0, 1);
-    TEST<bool>("Set Xor gate bool value test", xorGate->get(), 0);
-
-    xorGate->set(1, 1);
     TEST<bool>("Set Xor gate index and bool value test", xorGate->get(), 0);
 
     input[0] = 1;

@@ -1,11 +1,13 @@
-#ifndef OR_GATE
-#define OR_GATE
+#ifndef NAND_GATE
+#define NAND_GATE
 
 #include "InputArrayUtility.h"
+#include "Not.h"
+#include "And.h"
 
-// gate implements A + B
+// gate implements !(AB)
 
-class Or{
+class Nand{
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -13,27 +15,48 @@ class Or{
     InputArrayUtility* input;
     InputArrayUtility* output;
 
+    Not* n_AB;
+    And* AB;
+
+    void update(){
+        AB->set(0, input->get(0));
+        AB->set(1, input->get(1));
+
+        n_AB->set(AB->get());
+    }
+
     void propagate(){
-        output->set(0, input->get(0) || input->get(1));
+        output->set(0, n_AB->get());
     }
 
     public:
 
-    Or(){
+    Nand(){
         input = new InputArrayUtility(inputSize);
         output = new InputArrayUtility(outputSize);
+
+        n_AB = new Not();
+        AB = new And();
+        update();
         propagate();
     }
 
-    Or(bool inputValue[]){
+    Nand(bool inputValue[]){
         input = new InputArrayUtility(inputValue, inputSize);
         output = new InputArrayUtility(outputSize);
+
+        n_AB = new Not();
+        AB = new And();
+        update();
         propagate();
     }
 
-    ~Or(){
+    ~Nand(){
         delete input;
         delete output;
+
+        delete AB;
+        delete n_AB;
     }
 
     bool get(){
@@ -45,11 +68,15 @@ class Or{
             throw std::invalid_argument("Requested invalid index");
         }
         input->set(index, value);
+
+        update();
         propagate();
     }
 
     void set(bool values[]){
         input->set(values);
+        
+        update();
         propagate();
     }
 
@@ -58,11 +85,11 @@ class Or{
     }
 
     static int getInputSize(){
-        return Or::inputSize;
+        return Nand::inputSize;
     }
 
     static int getOutputSize(){
-        return Or::outputSize;
+        return Nand::outputSize;
     }
 };
 

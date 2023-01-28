@@ -6,7 +6,7 @@
 #include "And.h"
 #include "Or.h"
 
-// gate implements A!B + !AB
+// gate implements ( A!B ) + ( !AB )
 
 class Xor{
     static const int inputSize = 2;
@@ -56,6 +56,7 @@ class Xor{
 
         AnB_nAB = new Or();
 
+        update();
         propagate();
     }
 
@@ -104,7 +105,7 @@ class Xor{
 
     void set(bool values[]){
         input->set(values);
-        
+
         update();
         propagate();
     }

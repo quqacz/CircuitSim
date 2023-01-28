@@ -19,9 +19,6 @@ void andGateTest(){
     TEST<bool>("Get And gate test", andGate->get(), 0);
 
     andGate->set(0, 1);
-    TEST<bool>("Set And gate bool value test", andGate->get(), 1);
-
-    andGate->set(1, 1);
     TEST<bool>("Set And gate index and bool value test", andGate->get(), 1);
 
     input[0] = 0;

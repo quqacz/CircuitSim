@@ -1,11 +1,14 @@
-#ifndef OR_GATE
-#define OR_GATE
+#ifndef XNOR_GATE
+#define XNOR_GATE
 
 #include "InputArrayUtility.h"
+#include "Nor.h"
+#include "And.h"
+#include "Or.h"
 
-// gate implements A + B
+// gate implements ( AB ) + ( !A!B ) 
 
-class Or{
+class Xnor{
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -13,27 +16,66 @@ class Or{
     InputArrayUtility* input;
     InputArrayUtility* output;
 
+    Nor* AnorB;
+
+    And* AandB;
+
+    Or* AnorB_AandB;
+
+    void update(){
+        AnorB->set(0, input->get(0));
+        AnorB->set(1, input->get(1));
+
+        AandB->set(0, input->get(0));
+        AandB->set(1, input->get(1));
+
+        AnorB_AandB->set(0, AnorB->get());
+        AnorB_AandB->set(1, AandB->get());
+    }
+
     void propagate(){
-        output->set(0, input->get(0) || input->get(1));
+        output->set(0, AnorB_AandB->get());
     }
 
     public:
 
-    Or(){
+    Xnor(){
         input = new InputArrayUtility(inputSize);
         output = new InputArrayUtility(outputSize);
+
+        AnorB = new Nor();
+
+        AandB = new And();
+
+        AnorB_AandB = new Or();
+
+        update();
         propagate();
     }
 
-    Or(bool inputValue[]){
+    Xnor(bool inputValue[]){
         input = new InputArrayUtility(inputValue, inputSize);
         output = new InputArrayUtility(outputSize);
+
+        AnorB = new Nor();
+
+        AandB = new And();
+
+        AnorB_AandB = new Or();
+
+        update();
         propagate();
     }
 
-    ~Or(){
+    ~Xnor(){
         delete input;
         delete output;
+
+        delete AnorB;
+
+        delete AandB;
+
+        delete AnorB_AandB;
     }
 
     bool get(){
@@ -45,11 +87,15 @@ class Or{
             throw std::invalid_argument("Requested invalid index");
         }
         input->set(index, value);
+
+        update();
         propagate();
     }
 
     void set(bool values[]){
         input->set(values);
+
+        update();
         propagate();
     }
 
@@ -58,11 +104,11 @@ class Or{
     }
 
     static int getInputSize(){
-        return Or::inputSize;
+        return Xnor::inputSize;
     }
 
     static int getOutputSize(){
-        return Or::outputSize;
+        return Xnor::outputSize;
     }
 };
 
