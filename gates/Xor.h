@@ -58,6 +58,8 @@ class Xor{
 
         update();
         propagate();
+
+        Xor::count ++;
     }
 
     Xor(bool inputValue[]){
@@ -74,6 +76,8 @@ class Xor{
 
         update();
         propagate();
+
+        Xor::count ++;
     }
 
     ~Xor(){
@@ -87,6 +91,8 @@ class Xor{
         delete nAB;
 
         delete AnB_nAB;
+
+        Xor::count --;
     }
 
     bool get(){
@@ -114,6 +120,10 @@ class Xor{
         return output->toString();
     }
 
+    static int getCount(){
+        return Xor::count;
+    }
+
     static int getInputSize(){
         return Xor::inputSize;
     }
@@ -122,5 +132,7 @@ class Xor{
         return Xor::outputSize;
     }
 };
+
+int Xor::count = 0;
 
 #endif

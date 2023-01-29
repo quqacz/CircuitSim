@@ -23,12 +23,16 @@ class Not{
         input = new InputArrayUtility(inputSize);
         output = new InputArrayUtility(outputSize);
         propagate();
+
+        Not::count ++;
     }
 
     Not(bool inputValue[]){
         input = new InputArrayUtility(inputValue, inputSize);
         output = new InputArrayUtility(outputSize);
         propagate();
+
+        Not::count ++;
     }
 
     Not(bool inputValue){
@@ -36,11 +40,15 @@ class Not{
         output = new InputArrayUtility(outputSize);
         input->set(0, inputValue);
         propagate();
+
+        Not::count ++;
     }
 
     ~Not(){
         delete input;
         delete output;
+
+        Not::count --;
     }
 
     bool get(){
@@ -69,6 +77,9 @@ class Not{
         return output->toString();
     }
 
+    static int getCount(){
+        return Not::count;
+    }
 
     static int getInputSize(){
         return Not::inputSize;
@@ -78,5 +89,7 @@ class Not{
         return Not::outputSize;
     }
 };
+
+int Not::count = 0;
 
 #endif

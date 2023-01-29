@@ -3,30 +3,48 @@
 
 #include<iostream>
 #include<string.h>
+#include<chrono>
 
 #include "Xor.h"
 #include "TestFunctions.h"
 
-void xorGateTest(){
+void xorGateTest(int& successes, int& failures, int64_t& timeTaken){
     Xor* xorGate = new Xor();
+    int success = 0;
+    int fail = 0;
 
-    TEST<std::string>("Initialization Xor gate no arguments test", xorGate->toString(), "0");
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_point, end_point;
+    start_point = std::chrono::high_resolution_clock::now();
 
+    TEST<std::string>("Initialization Xor gate no arguments test", xorGate->toString(), "0", success, fail);
+
+    delete xorGate;
     bool input[Xor::getInputSize()] = {0,1};
     xorGate = new Xor(input);
-    TEST<std::string>("Initialization Xor gate set test", xorGate->toString(), "1");
+    TEST<std::string>("Initialization Xor gate set test", xorGate->toString(), "1", success, fail);
 
-    TEST<bool>("Get Xor gate test", xorGate->get(), 1);
+    TEST<bool>("Get Xor gate test", xorGate->get(), 1, success, fail);
 
     xorGate->set(0, 1);
-    TEST<bool>("Set Xor gate index and bool value test", xorGate->get(), 0);
+    TEST<bool>("Set Xor gate index and bool value test", xorGate->get(), 0, success, fail);
 
     input[0] = 1;
     input[1] = 0;
     xorGate->set(input);
-    TEST<bool>("Set Xor gate values set test", xorGate->get(), 1);
+    TEST<bool>("Set Xor gate values set test", xorGate->get(), 1, success, fail);
+
+    TEST<int>("Count test", Xor::getCount(), 1, success, fail);
 
     delete xorGate;
+
+    end_point = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::time_point_cast<std::chrono::microseconds>(start_point).time_since_epoch().count(); 
+    auto end = std::chrono::time_point_cast<std::chrono::microseconds>(end_point).time_since_epoch().count(); 
+
+    printTestBenchmark(success, fail, (end - start));
+    successes += success;
+    failures += fail;
+    timeTaken += (end - start);
 }
 
 #endif

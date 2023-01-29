@@ -37,8 +37,11 @@ class Nor{
 
         n_AoB = new Not();
         AoB = new Or();
+
         update();
         propagate();
+
+        Nor::count ++;
     }
 
     Nor(bool inputValue[]){
@@ -47,8 +50,11 @@ class Nor{
 
         n_AoB = new Not();
         AoB = new Or();
+
         update();
         propagate();
+
+        Nor::count ++;
     }
 
     ~Nor(){
@@ -57,6 +63,8 @@ class Nor{
 
         delete AoB;
         delete n_AoB;
+
+        Nor::count --;
     }
 
     bool get(){
@@ -84,6 +92,10 @@ class Nor{
         return output->toString();
     }
 
+    static int getCount(){
+        return Nor::count;
+    }
+
     static int getInputSize(){
         return Nor::inputSize;
     }
@@ -92,5 +104,7 @@ class Nor{
         return Nor::outputSize;
     }
 };
+
+int Nor::count = 0;
 
 #endif

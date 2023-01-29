@@ -37,8 +37,11 @@ class Nand{
 
         n_AB = new Not();
         AB = new And();
+
         update();
         propagate();
+
+        Nand::count ++;
     }
 
     Nand(bool inputValue[]){
@@ -47,8 +50,11 @@ class Nand{
 
         n_AB = new Not();
         AB = new And();
+
         update();
         propagate();
+
+        Nand::count ++;
     }
 
     ~Nand(){
@@ -57,6 +63,8 @@ class Nand{
 
         delete AB;
         delete n_AB;
+
+        Nand::count --;
     }
 
     bool get(){
@@ -84,6 +92,10 @@ class Nand{
         return output->toString();
     }
 
+    static int getCount(){
+        return Nand::count;
+    }
+
     static int getInputSize(){
         return Nand::inputSize;
     }
@@ -92,5 +104,7 @@ class Nand{
         return Nand::outputSize;
     }
 };
+
+int Nand::count = 0;
 
 #endif

@@ -23,17 +23,23 @@ class And{
         input = new InputArrayUtility(inputSize);
         output = new InputArrayUtility(outputSize);
         propagate();
+
+        And::count ++;
     }
 
     And(bool inputValue[]){
         input = new InputArrayUtility(inputValue, inputSize);
         output = new InputArrayUtility(outputSize);
         propagate();
+
+        And::count ++;
     }
 
     ~And(){
         delete input;
         delete output;
+
+        And::count --;
     }
 
     bool get(){
@@ -57,6 +63,10 @@ class And{
         return output->toString();
     }
 
+    static int getCount(){
+        return And::count;
+    }
+
     static int getInputSize(){
         return And::inputSize;
     }
@@ -65,5 +75,7 @@ class And{
         return And::outputSize;
     }
 };
+
+int And::count = 0;
 
 #endif

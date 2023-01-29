@@ -1,6 +1,8 @@
 #include<iostream>
 #include<string.h>
 
+#include "LoggingUtility.h"
+
 #include "InputArrayUtilityTest.h"
 #include "TestFunctions.h"
 #include "NotGateTest.h"
@@ -11,35 +13,37 @@
 #include "NorGateTest.h"
 #include "XnorGateTest.h"
 
-void printTestHeader(std::string headerName){
-    std::cout<< "\033[1;35m ========================================\033[0m\n";
-    std::cout<< "\033[1;35m ========== " << headerName << " ==========\033[0m\n";
-    std::cout<< "\033[1;35m ========================================\033[0m\n";
-}
-
 int main(){
+
+    int success = 0;
+    int fail = 0;
+    int64_t timeTaken = 0;
+
     printTestHeader("InputArrayUtilityTest");
-    inputArrayUtilityTest();
+    inputArrayUtilityTest(success, fail, timeTaken);
 
     printTestHeader("NotGateTest");
-    notGateTest();
+    notGateTest(success, fail, timeTaken);
 
     printTestHeader("AndGateTest");
-    andGateTest();
+    andGateTest(success, fail, timeTaken);
 
     printTestHeader("OrGateTest");
-    orGateTest();
+    orGateTest(success, fail, timeTaken);
 
     printTestHeader("XorGateTest");
-    xorGateTest();
+    xorGateTest(success, fail, timeTaken);
 
     printTestHeader("NandGateTest");
-    nandGateTest();
+    nandGateTest(success, fail, timeTaken);
 
     printTestHeader("NorGateTest");
-    norGateTest();
+    norGateTest(success, fail, timeTaken);
 
     printTestHeader("XnorGateTest");
-    xnorGateTest();
+    xnorGateTest(success, fail, timeTaken);
+
+    printTestHeader("Test Results");
+    printTestBenchmark(success, fail, timeTaken);
     return 0;
 }

@@ -23,17 +23,23 @@ class Or{
         input = new InputArrayUtility(inputSize);
         output = new InputArrayUtility(outputSize);
         propagate();
+
+        Or::count ++;
     }
 
     Or(bool inputValue[]){
         input = new InputArrayUtility(inputValue, inputSize);
         output = new InputArrayUtility(outputSize);
         propagate();
+
+        Or::count ++;
     }
 
     ~Or(){
         delete input;
         delete output;
+
+        Or::count --;
     }
 
     bool get(){
@@ -57,6 +63,10 @@ class Or{
         return output->toString();
     }
 
+    static int getCount(){
+        return Or::count;
+    }
+
     static int getInputSize(){
         return Or::inputSize;
     }
@@ -65,5 +75,7 @@ class Or{
         return Or::outputSize;
     }
 };
+
+int Or::count = 0;
 
 #endif

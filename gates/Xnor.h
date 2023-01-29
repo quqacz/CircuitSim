@@ -51,6 +51,8 @@ class Xnor{
 
         update();
         propagate();
+
+        Xnor::count ++;
     }
 
     Xnor(bool inputValue[]){
@@ -65,6 +67,8 @@ class Xnor{
 
         update();
         propagate();
+
+        Xnor::count ++;
     }
 
     ~Xnor(){
@@ -76,6 +80,8 @@ class Xnor{
         delete AandB;
 
         delete AnorB_AandB;
+
+        Xnor::count --;
     }
 
     bool get(){
@@ -103,6 +109,10 @@ class Xnor{
         return output->toString();
     }
 
+    static int getCount(){
+        return Xnor::count;
+    }
+
     static int getInputSize(){
         return Xnor::inputSize;
     }
@@ -111,5 +121,7 @@ class Xnor{
         return Xnor::outputSize;
     }
 };
+
+int Xnor::count = 0;
 
 #endif
