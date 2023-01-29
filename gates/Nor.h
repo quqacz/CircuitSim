@@ -12,6 +12,17 @@ class Nor{
     static const int outputSize = 1;
     static int count;
 
+    static const int truthTableRows = 4;
+    static const int truthTableInputCollumns = 2;
+
+    static constexpr bool truthTableInput[truthTableRows][truthTableInputCollumns]= {
+        {0, 0}, {0, 1}, {1, 0}, {1, 1}
+    };
+
+    static constexpr bool truthTableOutput[truthTableRows] = {
+        1, 0, 0, 0
+    };
+
     InputArrayUtility* input;
     InputArrayUtility* output;
 
@@ -103,8 +114,44 @@ class Nor{
     static int getOutputSize(){
         return Nor::outputSize;
     }
+
+        static int getTruthTableRowsCount(){
+        return Nor::truthTableRows;
+    }
+
+    static bool* getTruthTableInput(int index){
+        if(index < 0 || index > Nor::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+
+        bool* entry = new bool(Nor::truthTableInputCollumns);
+        for(int i = 0; i < Nor::truthTableInputCollumns; i++){
+            entry[i] = Nor::truthTableInput[index][i];
+        }
+
+        return entry;
+    }
+
+    static bool getTruthTableOutput(int index){
+        if(index < 0 || index > Nor::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+        return Nor::truthTableOutput[index];
+    }
+
+    static void printTruthTable(){
+        for(int i = 0; i < Nor::truthTableRows; i++){
+            for(int j = 0; j < Nor::truthTableInputCollumns; j++){
+                std::cout<< Nor::truthTableInput[i][j] << " ";
+            }
+            std::cout<< "|" << Nor::truthTableOutput[i] << std::endl; 
+        }
+    }
 };
 
 int Nor::count = 0;
+
+constexpr bool Nor::truthTableInput[Nor::truthTableRows][Nor::truthTableInputCollumns];
+constexpr bool Nor::truthTableOutput[Nor::truthTableRows];
 
 #endif

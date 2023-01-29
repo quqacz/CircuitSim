@@ -26,13 +26,20 @@ void orGateTest(int& successes, int& failures, int64_t& timeTaken){
     TEST<bool>("Get Or gate test", orGate->get(), 1, success, fail);
 
     orGate->set(1, 1);
-    TEST<bool>("Set Or gate index and bool value test", orGate->get(), 1, success, fail);
+    TEST<bool>("Set Or gate index or bool value test", orGate->get(), 1, success, fail);
 
     input[0] = 0;
     orGate->set(input);
     TEST<bool>("Set Or gate values set test", orGate->get(), 1, success, fail);
 
     TEST<int>("Count test", Or::getCount(), 1, success, fail);
+
+    for(int i = 0; i < Or::getTruthTableRowsCount(); i++){
+        auto array = Or::getTruthTableInput(i);
+        orGate->set(array);
+        TEST<bool>("Truth table Or gate test", orGate->get(), Or::getTruthTableOutput(i), success, fail, true);
+        delete [] array;
+    }
 
     delete orGate;
 

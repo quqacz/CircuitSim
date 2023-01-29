@@ -13,6 +13,17 @@ class Xnor{
     static const int outputSize = 1;
     static int count;
 
+    static const int truthTableRows = 4;
+    static const int truthTableInputCollumns = 2;
+
+    static constexpr bool truthTableInput[truthTableRows][truthTableInputCollumns]= {
+        {0, 0}, {0, 1}, {1, 0}, {1, 1}
+    };
+
+    static constexpr bool truthTableOutput[truthTableRows] = {
+        1, 0, 0, 1
+    };
+
     InputArrayUtility* input;
     InputArrayUtility* output;
 
@@ -120,8 +131,44 @@ class Xnor{
     static int getOutputSize(){
         return Xnor::outputSize;
     }
+
+        static int getTruthTableRowsCount(){
+        return Xnor::truthTableRows;
+    }
+
+    static bool* getTruthTableInput(int index){
+        if(index < 0 || index > Xnor::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+
+        bool* entry = new bool(Xnor::truthTableInputCollumns);
+        for(int i = 0; i < Xnor::truthTableInputCollumns; i++){
+            entry[i] = Xnor::truthTableInput[index][i];
+        }
+
+        return entry;
+    }
+
+    static bool getTruthTableOutput(int index){
+        if(index < 0 || index > Xnor::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+        return Xnor::truthTableOutput[index];
+    }
+
+    static void printTruthTable(){
+        for(int i = 0; i < Xnor::truthTableRows; i++){
+            for(int j = 0; j < Xnor::truthTableInputCollumns; j++){
+                std::cout<< Xnor::truthTableInput[i][j] << " ";
+            }
+            std::cout<< "|" << Xnor::truthTableOutput[i] << std::endl; 
+        }
+    }
 };
 
 int Xnor::count = 0;
+
+constexpr bool Xnor::truthTableInput[Xnor::truthTableRows][Xnor::truthTableInputCollumns];
+constexpr bool Xnor::truthTableOutput[Xnor::truthTableRows];
 
 #endif

@@ -1,8 +1,14 @@
 #ifndef GATE
 #define GATE
 
-class Gate{
-    
-}
+#include "InputArrayUtility.h"
 
-#ifndef
+class Gate{
+    public:
+    Gate(){}
+    ~Gate(){}
+    virtual bool get() = 0;
+    virtual void set(bool values[]) = 0;
+};
+
+#endif

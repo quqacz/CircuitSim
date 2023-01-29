@@ -35,6 +35,13 @@ void xorGateTest(int& successes, int& failures, int64_t& timeTaken){
 
     TEST<int>("Count test", Xor::getCount(), 1, success, fail);
 
+    for(int i = 0; i < Xor::getTruthTableRowsCount(); i++){
+        auto array = Xor::getTruthTableInput(i);
+        xorGate->set(array);
+        TEST<bool>("Truth table And gate test", xorGate->get(), Xor::getTruthTableOutput(i), success, fail, true);
+        delete [] array;
+    }
+
     delete xorGate;
 
     end_point = std::chrono::high_resolution_clock::now();

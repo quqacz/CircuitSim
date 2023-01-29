@@ -26,7 +26,7 @@ void norGateTest(int& successes, int& failures, int64_t& timeTaken){
     TEST<bool>("Get Nor gate test", norGate->get(), 0, success, fail);
 
     norGate->set(1, 1);
-    TEST<bool>("Set Nor gate index and bool value test", norGate->get(), 0, success, fail);
+    TEST<bool>("Set Nor gate index nor bool value test", norGate->get(), 0, success, fail);
 
     input[0] = 1;
     input[1] = 0;
@@ -34,6 +34,13 @@ void norGateTest(int& successes, int& failures, int64_t& timeTaken){
     TEST<bool>("Set Nor gate values set test", norGate->get(), 0, success, fail);
 
     TEST<int>("Count test", Nor::getCount(), 1, success, fail);
+
+    for(int i = 0; i < Nor::getTruthTableRowsCount(); i++){
+        auto array = Nor::getTruthTableInput(i);
+        norGate->set(array);
+        TEST<bool>("Truth table Nor gate test", norGate->get(), Nor::getTruthTableOutput(i), success, fail, true);
+        delete [] array;
+    }
 
     delete norGate;
 

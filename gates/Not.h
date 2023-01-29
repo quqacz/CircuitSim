@@ -10,6 +10,17 @@ class Not{
     static const int outputSize = 1;
     static int count;
 
+    static const int truthTableRows = 2;
+    static const int truthTableInputCollumns = 1;
+
+    static constexpr bool truthTableInput[truthTableRows][truthTableInputCollumns]= {
+        {0}, {1}
+    };
+
+    static constexpr bool truthTableOutput[truthTableRows] = {
+        1, 0
+    };
+
     InputArrayUtility* input;
     InputArrayUtility* output;
 
@@ -88,8 +99,45 @@ class Not{
     static int getOutputSize(){
         return Not::outputSize;
     }
+
+    
+    static int getTruthTableRowsCount(){
+        return Not::truthTableRows;
+    }
+
+    static bool* getTruthTableInput(int index){
+        if(index < 0 || index > Not::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+
+        bool* entry = new bool(Not::truthTableInputCollumns);
+        for(int i = 0; i < Not::truthTableInputCollumns; i++){
+            entry[i] = Not::truthTableInput[index][i];
+        }
+
+        return entry;
+    }
+
+    static bool getTruthTableOutput(int index){
+        if(index < 0 || index > Not::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+        return Not::truthTableOutput[index];
+    }
+
+    static void printTruthTable(){
+        for(int i = 0; i < Not::truthTableRows; i++){
+            for(int j = 0; j < Not::truthTableInputCollumns; j++){
+                std::cout<< Not::truthTableInput[i][j] << " ";
+            }
+            std::cout<< "|" << Not::truthTableOutput[i] << std::endl; 
+        }
+    }
 };
 
 int Not::count = 0;
+
+constexpr bool Not::truthTableInput[Not::truthTableRows][Not::truthTableInputCollumns];
+constexpr bool Not::truthTableOutput[Not::truthTableRows];
 
 #endif

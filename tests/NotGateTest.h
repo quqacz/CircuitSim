@@ -41,6 +41,13 @@ void notGateTest(int& successes, int& failures, int64_t& timeTaken){
 
     TEST<int>("Count test", Not::getCount(), 1, success, fail);
 
+    for(int i = 0; i < Not::getTruthTableRowsCount(); i++){
+        auto array = Not::getTruthTableInput(i);
+        notGate->set(array);
+        TEST<bool>("Truth table Not gate test", notGate->get(), Not::getTruthTableOutput(i), success, fail, true);
+        delete [] array;
+    }
+
     delete notGate;
 
     end_point = std::chrono::high_resolution_clock::now();

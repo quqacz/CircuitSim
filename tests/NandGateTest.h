@@ -35,6 +35,13 @@ void nandGateTest(int& successes, int& failures, int64_t& timeTaken){
 
     TEST<int>("Count test", Nand::getCount(), 1, success, fail);
 
+    for(int i = 0; i < Nand::getTruthTableRowsCount(); i++){
+        auto array = Nand::getTruthTableInput(i);
+        nandGate->set(array);
+        TEST<bool>("Truth table Nand gate test", nandGate->get(), Nand::getTruthTableOutput(i), success, fail, true);
+        delete [] array;
+    }
+
     delete nandGate;
 
     end_point = std::chrono::high_resolution_clock::now();

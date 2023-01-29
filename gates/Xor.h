@@ -13,6 +13,17 @@ class Xor{
     static const int outputSize = 1;
     static int count;
 
+    static const int truthTableRows = 4;
+    static const int truthTableInputCollumns = 2;
+
+    static constexpr bool truthTableInput[truthTableRows][truthTableInputCollumns]= {
+        {0, 0}, {0, 1}, {1, 0}, {1, 1}
+    };
+
+    static constexpr bool truthTableOutput[truthTableRows] = {
+        0, 1, 1, 0
+    };
+
     InputArrayUtility* input;
     InputArrayUtility* output;
 
@@ -131,8 +142,44 @@ class Xor{
     static int getOutputSize(){
         return Xor::outputSize;
     }
+
+        static int getTruthTableRowsCount(){
+        return Xor::truthTableRows;
+    }
+
+    static bool* getTruthTableInput(int index){
+        if(index < 0 || index > Xor::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+
+        bool* entry = new bool(Xor::truthTableInputCollumns);
+        for(int i = 0; i < Xor::truthTableInputCollumns; i++){
+            entry[i] = Xor::truthTableInput[index][i];
+        }
+
+        return entry;
+    }
+
+    static bool getTruthTableOutput(int index){
+        if(index < 0 || index > Xor::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+        return Xor::truthTableOutput[index];
+    }
+
+    static void printTruthTable(){
+        for(int i = 0; i < Xor::truthTableRows; i++){
+            for(int j = 0; j < Xor::truthTableInputCollumns; j++){
+                std::cout<< Xor::truthTableInput[i][j] << " ";
+            }
+            std::cout<< "|" << Xor::truthTableOutput[i] << std::endl; 
+        }
+    }
 };
 
 int Xor::count = 0;
+
+constexpr bool Xor::truthTableInput[Xor::truthTableRows][Xor::truthTableInputCollumns];
+constexpr bool Xor::truthTableOutput[Xor::truthTableRows];
 
 #endif

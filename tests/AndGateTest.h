@@ -33,6 +33,13 @@ void andGateTest(int& successes, int& failures, int64_t& timeTaken){
     TEST<bool>("Set And gate values set test", andGate->get(), 0, success, fail);
 
     TEST<int>("Count test", And::getCount(), 1, success, fail);
+  
+    for(int i = 0; i < And::getTruthTableRowsCount(); i++){
+        auto array = And::getTruthTableInput(i);
+        andGate->set(array);
+        TEST<bool>("Truth table And gate test", andGate->get(), And::getTruthTableOutput(i), success, fail, true);
+        delete [] array;
+    }
 
     delete andGate;
 

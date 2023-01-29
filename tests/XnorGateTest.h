@@ -35,6 +35,13 @@ void xnorGateTest(int& successes, int& failures, int64_t& timeTaken){
 
     TEST<int>("Count test", Xnor::getCount(), 1, success, fail);
 
+    for(int i = 0; i < Xnor::getTruthTableRowsCount(); i++){
+        auto array = Xnor::getTruthTableInput(i);
+        xnorGate->set(array);
+        TEST<bool>("Truth table Xnor gate test", xnorGate->get(), Xnor::getTruthTableOutput(i), success, fail, true);
+        delete [] array;
+    }
+
     delete xnorGate;
 
     end_point = std::chrono::high_resolution_clock::now();

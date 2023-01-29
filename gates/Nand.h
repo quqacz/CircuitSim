@@ -12,6 +12,17 @@ class Nand{
     static const int outputSize = 1;
     static int count;
 
+    static const int truthTableRows = 4;
+    static const int truthTableInputCollumns = 2;
+
+    static constexpr bool truthTableInput[truthTableRows][truthTableInputCollumns]= {
+        {0, 0}, {0, 1}, {1, 0}, {1, 1}
+    };
+
+    static constexpr bool truthTableOutput[truthTableRows] = {
+        1, 1, 1, 0
+    };
+
     InputArrayUtility* input;
     InputArrayUtility* output;
 
@@ -103,8 +114,44 @@ class Nand{
     static int getOutputSize(){
         return Nand::outputSize;
     }
+
+    static int getTruthTableRowsCount(){
+        return Nand::truthTableRows;
+    }
+
+    static bool* getTruthTableInput(int index){
+        if(index < 0 || index > Nand::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+
+        bool* entry = new bool(Nand::truthTableInputCollumns);
+        for(int i = 0; i < Nand::truthTableInputCollumns; i++){
+            entry[i] = Nand::truthTableInput[index][i];
+        }
+
+        return entry;
+    }
+
+    static bool getTruthTableOutput(int index){
+        if(index < 0 || index > Nand::truthTableRows){
+            throw std::invalid_argument("Requested invalid index");
+        }
+        return Nand::truthTableOutput[index];
+    }
+
+    static void printTruthTable(){
+        for(int i = 0; i < Nand::truthTableRows; i++){
+            for(int j = 0; j < Nand::truthTableInputCollumns; j++){
+                std::cout<< Nand::truthTableInput[i][j] << " ";
+            }
+            std::cout<< "|" << Nand::truthTableOutput[i] << std::endl; 
+        }
+    }
 };
 
 int Nand::count = 0;
+
+constexpr bool Nand::truthTableInput[Nand::truthTableRows][Nand::truthTableInputCollumns];
+constexpr bool Nand::truthTableOutput[Nand::truthTableRows];
 
 #endif
