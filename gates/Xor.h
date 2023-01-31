@@ -1,14 +1,15 @@
 #ifndef XOR_GATE
 #define XOR_GATE
 
-#include "InputArrayUtility.h"
+#include "InputArray.h"
+#include "Gate.h"
 #include "Not.h"
 #include "And.h"
 #include "Or.h"
 
 // gate implements ( A!B ) + ( !AB )
 
-class Xor{
+class Xor : public Gate{
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -24,8 +25,8 @@ class Xor{
         0, 1, 1, 0
     };
 
-    InputArrayUtility* input;
-    InputArrayUtility* output;
+    InputArray* input;
+    InputArray* output;
 
     Not* nB;
     Not* nA;
@@ -56,8 +57,8 @@ class Xor{
     public:
 
     Xor(){
-        input = new InputArrayUtility(inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputSize);
+        output = new InputArray(outputSize);
 
         nA = new Not();
         nB = new Not();
@@ -74,8 +75,8 @@ class Xor{
     }
 
     Xor(bool inputValue[]){
-        input = new InputArrayUtility(inputValue, inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputValue, inputSize);
+        output = new InputArray(outputSize);
 
         nA = new Not();
         nB = new Not();
@@ -143,7 +144,7 @@ class Xor{
         return Xor::outputSize;
     }
 
-        static int getTruthTableRowsCount(){
+    static int getTruthTableRowsCount(){
         return Xor::truthTableRows;
     }
 

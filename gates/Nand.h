@@ -1,13 +1,14 @@
 #ifndef NAND_GATE
 #define NAND_GATE
 
-#include "InputArrayUtility.h"
+#include "InputArray.h"
+#include "Gate.h"
 #include "Not.h"
 #include "And.h"
 
 // gate implements !(AB)
 
-class Nand{
+class Nand : public Gate {
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -23,8 +24,8 @@ class Nand{
         1, 1, 1, 0
     };
 
-    InputArrayUtility* input;
-    InputArrayUtility* output;
+    InputArray* input;
+    InputArray* output;
 
     Not* n_AB;
     And* AB;
@@ -43,8 +44,8 @@ class Nand{
     public:
 
     Nand(){
-        input = new InputArrayUtility(inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputSize);
+        output = new InputArray(outputSize);
 
         n_AB = new Not();
         AB = new And();
@@ -56,8 +57,8 @@ class Nand{
     }
 
     Nand(bool inputValue[]){
-        input = new InputArrayUtility(inputValue, inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputValue, inputSize);
+        output = new InputArray(outputSize);
 
         n_AB = new Not();
         AB = new And();

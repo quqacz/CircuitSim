@@ -1,11 +1,12 @@
 #ifndef NOT_GATE
 #define NOT_GATE
 
-#include "InputArrayUtility.h"
+#include "InputArray.h"
+#include "Gate.h"
 
 // gate implements !A
 
-class Not{
+class Not : public Gate{
     static const int inputSize = 1;
     static const int outputSize = 1;
     static int count;
@@ -21,8 +22,8 @@ class Not{
         1, 0
     };
 
-    InputArrayUtility* input;
-    InputArrayUtility* output;
+    InputArray* input;
+    InputArray* output;
 
     void propagate(){
         output->set(0, !input->get(0));
@@ -31,24 +32,24 @@ class Not{
     public:
 
     Not(){
-        input = new InputArrayUtility(inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputSize);
+        output = new InputArray(outputSize);
         propagate();
 
         Not::count ++;
     }
 
     Not(bool inputValue[]){
-        input = new InputArrayUtility(inputValue, inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputValue, inputSize);
+        output = new InputArray(outputSize);
         propagate();
 
         Not::count ++;
     }
 
     Not(bool inputValue){
-        input = new InputArrayUtility(inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputSize);
+        output = new InputArray(outputSize);
         input->set(0, inputValue);
         propagate();
 

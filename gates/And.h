@@ -3,11 +3,12 @@
 
 #include<iostream>
 
-#include "InputArrayUtility.h"
+#include "InputArray.h"
+#include "Gate.h"
 
 // gate implements ( AB )
 
-class And{
+class And : public Gate{
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -23,8 +24,8 @@ class And{
         0, 0, 0, 1
     };
 
-    InputArrayUtility* input;
-    InputArrayUtility* output;
+    InputArray* input;
+    InputArray* output;
 
     void propagate(){
         output->set(0, input->get(0) && input->get(1));
@@ -33,16 +34,16 @@ class And{
     public:
 
     And(){
-        input = new InputArrayUtility(inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputSize);
+        output = new InputArray(outputSize);
         propagate();
 
         And::count ++;
     }
 
     And(bool inputValue[]){
-        input = new InputArrayUtility(inputValue, inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputValue, inputSize);
+        output = new InputArray(outputSize);
         propagate();
 
         And::count ++;

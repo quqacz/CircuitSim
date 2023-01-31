@@ -1,12 +1,8 @@
-#ifndef GATE
-#define GATE
-
-#include "InputArrayUtility.h"
+#ifndef GATE_INTERFACE
+#define GATE_INTERFACE
 
 class Gate{
     public:
-    Gate(){}
-    ~Gate(){}
     virtual bool get() = 0;
     virtual void set(bool values[]) = 0;
 };

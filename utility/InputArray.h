@@ -4,14 +4,14 @@
 #include<iostream>
 #include<string>
 
-class InputArrayUtility
+class InputArray
 {
     bool* values;
     int length;
 
     public:
     
-    InputArrayUtility(bool values[], int size) {
+    InputArray(bool values[], int size) {
         this->length = size;
         this->values = new bool(this->length);
         for(auto i = 0; i < this->length; i++){
@@ -19,7 +19,7 @@ class InputArrayUtility
         }
     }
 
-    InputArrayUtility(int size){
+    InputArray(int size){
         this->length = size;
         this->values = new bool(this->length);
         for(auto i = 0; i < this->length; i++){
@@ -27,7 +27,7 @@ class InputArrayUtility
         }
     }
 
-    ~InputArrayUtility(){
+    ~InputArray(){
         delete [] values;
     }
 

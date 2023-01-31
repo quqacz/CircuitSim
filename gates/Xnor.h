@@ -1,14 +1,15 @@
 #ifndef XNOR_GATE
 #define XNOR_GATE
 
-#include "InputArrayUtility.h"
+#include "InputArray.h"
+#include "Gate.h"
 #include "Nor.h"
 #include "And.h"
 #include "Or.h"
 
 // gate implements ( AB ) + ( !A!B ) 
 
-class Xnor{
+class Xnor : public Gate{
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -24,8 +25,8 @@ class Xnor{
         1, 0, 0, 1
     };
 
-    InputArrayUtility* input;
-    InputArrayUtility* output;
+    InputArray* input;
+    InputArray* output;
 
     Nor* AnorB;
 
@@ -51,8 +52,8 @@ class Xnor{
     public:
 
     Xnor(){
-        input = new InputArrayUtility(inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputSize);
+        output = new InputArray(outputSize);
 
         AnorB = new Nor();
 
@@ -67,8 +68,8 @@ class Xnor{
     }
 
     Xnor(bool inputValue[]){
-        input = new InputArrayUtility(inputValue, inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputValue, inputSize);
+        output = new InputArray(outputSize);
 
         AnorB = new Nor();
 

@@ -1,13 +1,14 @@
 #ifndef NOR_GATE
 #define NOR_GATE
 
-#include "InputArrayUtility.h"
+#include "InputArray.h"
+#include "Gate.h"
 #include "Not.h"
 #include "Or.h"
 
 // gate implements !(A + B)
 
-class Nor{
+class Nor : public Gate{
     static const int inputSize = 2;
     static const int outputSize = 1;
     static int count;
@@ -23,8 +24,8 @@ class Nor{
         1, 0, 0, 0
     };
 
-    InputArrayUtility* input;
-    InputArrayUtility* output;
+    InputArray* input;
+    InputArray* output;
 
     Not* n_AoB;
     Or* AoB;
@@ -43,8 +44,8 @@ class Nor{
     public:
 
     Nor(){
-        input = new InputArrayUtility(inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputSize);
+        output = new InputArray(outputSize);
 
         n_AoB = new Not();
         AoB = new Or();
@@ -56,8 +57,8 @@ class Nor{
     }
 
     Nor(bool inputValue[]){
-        input = new InputArrayUtility(inputValue, inputSize);
-        output = new InputArrayUtility(outputSize);
+        input = new InputArray(inputValue, inputSize);
+        output = new InputArray(outputSize);
 
         n_AoB = new Not();
         AoB = new Or();
