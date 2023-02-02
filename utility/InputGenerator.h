@@ -14,11 +14,7 @@ private:
 
     void generate(){
         for(auto i = 0; i < this->rowsCount; i++){
-            auto res = decymalToBinary(i, this->rowsCount);
-            for(int j = 0; j < this->columnsCount; j++){
-                std::cout<<res[j];
-            }
-            std::cout<<std::endl;
+            auto res = decymalToBinary(i, this->columnsCount);
             set(i, res);
         }
     }

@@ -11,4 +11,11 @@ void printTestBenchmark(int successCount, int failureCount, auto timeTaken){
     std::cout<< "Successes: " << successCount <<", Failures: " << failureCount << " in " << timeTaken << " micoseconds\n";
 }
 
+void printArray(bool array[], int length, char separator = '\0'){
+    for(int i = 0; i < length; i++){
+        std::cout<< array[i];
+    }
+    std::cout << std::endl;
+}
+
 #endif
