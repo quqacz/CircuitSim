@@ -15,6 +15,7 @@
 #include "NorGateTest.h"
 #include "XnorGateTest.h"
 #include "InputGeneratorTest.h"
+#include "Clear8BitTest.h"
 
 int main(){
 
@@ -51,6 +52,9 @@ int main(){
 
     printTestHeader("XnorGate Test");
     xnorGateTest(success, fail, timeTaken);
+
+    printTestHeader("Clear8Bit Test");
+    clear8BitTest(success, fail, timeTaken);
 
     printTestHeader("Test Results");
     printTestBenchmark(success, fail, timeTaken);
