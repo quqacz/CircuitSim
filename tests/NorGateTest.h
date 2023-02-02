@@ -8,7 +8,7 @@
 #include "Nor.h"
 #include "TestFunctions.h"
 
-void norGateTest(int& successes, int& failures, int64_t& timeTaken){
+void norGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
     Nor* norGate = new Nor();
     int success = 0;
     int fail = 0;
@@ -16,24 +16,24 @@ void norGateTest(int& successes, int& failures, int64_t& timeTaken){
     std::chrono::time_point<std::chrono::high_resolution_clock> start_point, end_point;
     start_point = std::chrono::high_resolution_clock::now();
 
-    TEST<std::string>("Initialization Nor gate no arguments test", norGate->toString(), "1", success, fail);
+    TEST<std::string>("Initialization Nor gate no arguments test", norGate->toString(), "1", success, fail, silentSuccessLog);
 
     delete norGate;
     bool input[Nor::getInputSize()] = {0,1};
     norGate = new Nor(input);
-    TEST<std::string>("Initialization Nor gate set test", norGate->toString(), "0", success, fail);
+    TEST<std::string>("Initialization Nor gate set test", norGate->toString(), "0", success, fail, silentSuccessLog);
 
-    TEST<bool>("Get Nor gate test", norGate->get(), 0, success, fail);
+    TEST<bool>("Get Nor gate test", norGate->get(), 0, success, fail, silentSuccessLog);
 
     norGate->set(1, 1);
-    TEST<bool>("Set Nor gate index nor bool value test", norGate->get(), 0, success, fail);
+    TEST<bool>("Set Nor gate index nor bool value test", norGate->get(), 0, success, fail, silentSuccessLog);
 
     input[0] = 1;
     input[1] = 0;
     norGate->set(input);
-    TEST<bool>("Set Nor gate values set test", norGate->get(), 0, success, fail);
+    TEST<bool>("Set Nor gate values set test", norGate->get(), 0, success, fail, silentSuccessLog);
 
-    TEST<int>("Count test", Nor::getCount(), 1, success, fail);
+    TEST<int>("Count test", Nor::getCount(), 1, success, fail, silentSuccessLog);
 
     for(int i = 0; i < Nor::getTruthTableRowsCount(); i++){
         auto array = Nor::getTruthTableInput(i);

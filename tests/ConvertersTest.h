@@ -6,19 +6,9 @@
 
 #include "Converters.h"
 #include "TestFunctions.h"
+#include "TestData.h"
 
-bool testData[8][3] = {
-    {0, 0, 0},
-    {0, 0, 1},
-    {0, 1, 0},
-    {0, 1, 1},
-    {1, 0, 0},
-    {1, 0, 1},
-    {1, 1, 0},
-    {1, 1, 1},
-};
-
-void convertersTest(int& successes, int& failures, int64_t& timeTaken){
+void convertersTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
     int success = 0;
     int fail = 0;
 
@@ -29,7 +19,7 @@ void convertersTest(int& successes, int& failures, int64_t& timeTaken){
 
     for(auto i = 0; i < 8; i++){
         testInput = decymalToBinary(i, 3);
-        TEST_ARRAY<bool*>("Converter decimal to binary test", testInput, testData[i], 3, success, fail, true);
+        TEST_ARRAY<bool*>("Converter decimal to binary test", testInput, testData3B[i], 3, success, fail, true);
     }
 
     end_point = std::chrono::high_resolution_clock::now();

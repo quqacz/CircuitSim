@@ -8,7 +8,7 @@
 #include "And.h"
 #include "TestFunctions.h"
 
-void andGateTest(int& successes, int& failures, int64_t& timeTaken){
+void andGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
     And* andGate = new And();
     int success = 0;
     int fail = 0;
@@ -16,23 +16,23 @@ void andGateTest(int& successes, int& failures, int64_t& timeTaken){
     std::chrono::time_point<std::chrono::high_resolution_clock> start_point, end_point;
     start_point = std::chrono::high_resolution_clock::now();
 
-    TEST<std::string>("Initialization And gate no arguments test", andGate->toString(), "0", success, fail);
+    TEST<std::string>("Initialization And gate no arguments test", andGate->toString(), "0", success, fail, silentSuccessLog);
 
     delete andGate;
     bool input[And::getInputSize()] = {0,1};
     andGate = new And(input);
-    TEST<std::string>("Initialization And gate set test", andGate->toString(), "0", success, fail);
+    TEST<std::string>("Initialization And gate set test", andGate->toString(), "0", success, fail, silentSuccessLog);
 
-    TEST<bool>("Get And gate test", andGate->get(), 0, success, fail);
+    TEST<bool>("Get And gate test", andGate->get(), 0, success, fail, silentSuccessLog);
 
     andGate->set(0, 1);
-    TEST<bool>("Set And gate index and bool value test", andGate->get(), 1, success, fail);
+    TEST<bool>("Set And gate index and bool value test", andGate->get(), 1, success, fail, silentSuccessLog);
 
     input[0] = 0;
     andGate->set(input);
-    TEST<bool>("Set And gate values set test", andGate->get(), 0, success, fail);
+    TEST<bool>("Set And gate values set test", andGate->get(), 0, success, fail, silentSuccessLog);
 
-    TEST<int>("Count test", And::getCount(), 1, success, fail);
+    TEST<int>("Count test", And::getCount(), 1, success, fail, silentSuccessLog);
   
     for(int i = 0; i < And::getTruthTableRowsCount(); i++){
         auto array = And::getTruthTableInput(i);

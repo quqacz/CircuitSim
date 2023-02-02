@@ -6,19 +6,9 @@
 
 #include "InputGenerator.h"
 #include "TestFunctions.h"
+#include "TestData.h"
 
-// bool testData[8][3] = {
-//     {0, 0, 0},
-//     {0, 0, 1},
-//     {0, 1, 0},
-//     {0, 1, 1},
-//     {1, 0, 0},
-//     {1, 0, 1},
-//     {1, 1, 0},
-//     {1, 1, 1},
-// };
-
-void inputGeneratorTest(int& successes, int& failures, int64_t& timeTaken){
+void inputGeneratorTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
     int success = 0;
     int fail = 0;
 
@@ -28,7 +18,7 @@ void inputGeneratorTest(int& successes, int& failures, int64_t& timeTaken){
     start_point = std::chrono::high_resolution_clock::now();
 
     for(auto i = 0; i < 8; i++){
-        TEST_ARRAY<bool*>("Input generator test", generatedInput->get(i), testData[i], 3, success, fail, false);
+        TEST_ARRAY<bool*>("Input generator test", generatedInput->get(i), TEST_DATA::testData3B[i], 3, success, fail, silentSuccessLog);
     }
 
     end_point = std::chrono::high_resolution_clock::now();

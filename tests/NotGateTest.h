@@ -8,7 +8,7 @@
 #include "Not.h"
 #include "TestFunctions.h"
 
-void notGateTest(int& successes, int& failures, int64_t& timeTaken){
+void notGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
     Not* notGate = new Not();
     int success = 0;
     int fail = 0;
@@ -16,30 +16,30 @@ void notGateTest(int& successes, int& failures, int64_t& timeTaken){
     std::chrono::time_point<std::chrono::high_resolution_clock> start_point, end_point;
     start_point = std::chrono::high_resolution_clock::now();
 
-    TEST<std::string>("Initialization Not gate no arguments test", notGate->toString(), "1", success, fail);
+    TEST<std::string>("Initialization Not gate no arguments test", notGate->toString(), "1", success, fail, silentSuccessLog);
 
     delete notGate;
     notGate = new Not(1);
-    TEST<std::string>("Initialization Not gate logical value test", notGate->toString(), "0", success, fail);
+    TEST<std::string>("Initialization Not gate logical value test", notGate->toString(), "0", success, fail, silentSuccessLog);
 
     bool input[Not::getInputSize()] = {0};
     delete notGate;
     notGate = new Not(input);
-    TEST<std::string>("Initialization Not gate set test", notGate->toString(), "1", success, fail);
+    TEST<std::string>("Initialization Not gate set test", notGate->toString(), "1", success, fail, silentSuccessLog);
 
-    TEST<bool>("Get Not gate test", notGate->get(), 1, success, fail);
+    TEST<bool>("Get Not gate test", notGate->get(), 1, success, fail, silentSuccessLog);
 
     notGate->set(1);
-    TEST<bool>("Set Not gate bool value test", notGate->get(), 0, success, fail);
+    TEST<bool>("Set Not gate bool value test", notGate->get(), 0, success, fail, silentSuccessLog);
 
     notGate->set(0, 0);
-    TEST<bool>("Set Not gate index and bool value test", notGate->get(), 1, success, fail);
+    TEST<bool>("Set Not gate index and bool value test", notGate->get(), 1, success, fail, silentSuccessLog);
 
     input[0] = 1;
     notGate->set(input);
-    TEST<bool>("Set Not gate values set test", notGate->get(), 0, success, fail);
+    TEST<bool>("Set Not gate values set test", notGate->get(), 0, success, fail, silentSuccessLog);
 
-    TEST<int>("Count test", Not::getCount(), 1, success, fail);
+    TEST<int>("Count test", Not::getCount(), 1, success, fail, silentSuccessLog);
 
     for(int i = 0; i < Not::getTruthTableRowsCount(); i++){
         auto array = Not::getTruthTableInput(i);
