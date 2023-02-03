@@ -6,7 +6,6 @@
 #include "Component.h"
 
 #include "InputArray.h"
-#include "Not.h"
 #include "Xor.h"
 
 class Inverter8Bit : public Component {

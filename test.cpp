@@ -17,6 +17,7 @@
 #include "InputGeneratorTest.h"
 #include "Clear8BitTest.h"
 #include "Inverter8BitTest.h"
+#include "And8BitTest.h"
 
 int main(){
 
@@ -59,6 +60,9 @@ int main(){
 
     printTestHeader("Inverter8Bit Test");
     inverter8BitTest(success, fail, timeTaken);
+
+    printTestHeader("And8Bit Test");
+    and8BitTest(success, fail, timeTaken);
 
     printTestHeader("Test Results");
     printTestBenchmark(success, fail, timeTaken);
