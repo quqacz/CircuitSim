@@ -2,6 +2,7 @@
 #include<string.h>
 
 #include "LoggingUtility.h"
+#include "TimeResolution.h"
 
 #include "InputArrayTest.h"
 #include "ConvertersTest.h"
@@ -69,6 +70,6 @@ int main(){
     or8BitTest(success, fail, timeTaken);
 
     printTestHeader("Test Results");
-    printTestBenchmark(success, fail, timeTaken);
+    printTestBenchmark(success, fail, timeTaken, TimeFormat::SECONDS);
     return 0;
 }
