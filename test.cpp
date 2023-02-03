@@ -20,6 +20,7 @@
 #include "Inverter8BitTest.h"
 #include "And8BitTest.h"
 #include "Or8BitTest.h"
+#include "Xor8BitTest.h"
 
 int main(){
 
@@ -66,8 +67,11 @@ int main(){
     printTestHeader("And8Bit Test");
     and8BitTest(success, fail, timeTaken);
 
-    printTestHeader("And8Bit Test");
+    printTestHeader("Or8Bit Test");
     or8BitTest(success, fail, timeTaken);
+
+    printTestHeader("Xor8Bit Test");
+    xor8BitTest(success, fail, timeTaken);
 
     printTestHeader("Test Results");
     printTestBenchmark(success, fail, timeTaken, TimeFormat::SECONDS);
