@@ -11,7 +11,6 @@
 class Or8Bit : public TwoInputComponent {
     static const int inputSize = 8;
     static const int outputSize = 8;
-    static const int invSize = 1;
     static int count;
 
     InputArray* inputA;

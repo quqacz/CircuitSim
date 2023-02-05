@@ -21,6 +21,7 @@
 #include "And8BitTest.h"
 #include "Or8BitTest.h"
 #include "Xor8BitTest.h"
+#include "Mux2X1Test.h"
 
 int main(){
 
@@ -72,6 +73,9 @@ int main(){
 
     printTestHeader("Xor8Bit Test");
     xor8BitTest(success, fail, timeTaken);
+
+    printTestHeader("Mux2X1 Test");
+    mux2X1Test(success, fail, timeTaken);
 
     printTestHeader("Test Results");
     printTestBenchmark(success, fail, timeTaken, TimeFormat::SECONDS);

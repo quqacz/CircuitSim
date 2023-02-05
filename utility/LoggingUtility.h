@@ -10,7 +10,7 @@ void printTestHeader(std::string headerName){
 }
 
 void printTestBenchmark(int successCount, int failureCount, auto timeTaken, TimeFormat format = TimeFormat::MICROSECONDS){
-    std::cout<< "Successes: " << successCount <<", Failures: " << failureCount << " in " << formatedTime(timeTaken, format);
+    std::cout<< "Successes: " << successCount <<", Failures: " << failureCount << " in " << formatedTime(timeTaken, format) <<std::endl;
 }
 
 void printArray(bool array[], int length, char separator = '\0'){
