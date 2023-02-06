@@ -67,6 +67,8 @@ public:
 
         update();
         propagate();
+
+        Mux2X1::count ++;
     }
     ~Mux2X1(){
         delete inputA;

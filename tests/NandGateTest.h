@@ -5,10 +5,12 @@
 #include<string.h>
 #include<chrono>
 
+#include "ComponentCounter.h"
+
 #include "Nand.h"
 #include "TestFunctions.h"
 
-void nandGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
+void nandGateTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
     Nand* nandGate = new Nand();
     int success = 0;
     int fail = 0;
@@ -41,6 +43,8 @@ void nandGateTest(int& successes, int& failures, int64_t& timeTaken, bool silent
         TEST<bool>("Truth table Nand gate test", nandGate->get(), Nand::getTruthTableOutput(i), success, fail, true);
         delete [] array;
     }
+
+    componentCounter->addCount();
 
     delete nandGate;
 

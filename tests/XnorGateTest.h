@@ -5,10 +5,12 @@
 #include<string.h>
 #include<chrono>
 
+#include "ComponentCounter.h"
+
 #include "Xnor.h"
 #include "TestFunctions.h"
 
-void xnorGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
+void xnorGateTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
     Xnor* xnorGate = new Xnor();
     int success = 0;
     int fail = 0;
@@ -41,6 +43,8 @@ void xnorGateTest(int& successes, int& failures, int64_t& timeTaken, bool silent
         TEST<bool>("Truth table Xnor gate test", xnorGate->get(), Xnor::getTruthTableOutput(i), success, fail, true);
         delete [] array;
     }
+
+    componentCounter->addCount();
 
     delete xnorGate;
 

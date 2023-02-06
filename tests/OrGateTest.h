@@ -5,10 +5,12 @@
 #include<string.h>
 #include<chrono>
 
+#include "ComponentCounter.h"
+
 #include "Or.h"
 #include "TestFunctions.h"
 
-void orGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
+void orGateTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
     Or* orGate = new Or();
     int success = 0;
     int fail = 0;
@@ -40,6 +42,8 @@ void orGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSu
         TEST<bool>("Truth table Or gate test", orGate->get(), Or::getTruthTableOutput(i), success, fail, true);
         delete [] array;
     }
+
+    componentCounter->addCount();
 
     delete orGate;
 

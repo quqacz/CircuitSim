@@ -5,10 +5,12 @@
 #include<string.h>
 #include<chrono>
 
+#include "ComponentCounter.h"
+
 #include "And.h"
 #include "TestFunctions.h"
 
-void andGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
+void andGateTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
     And* andGate = new And();
     int success = 0;
     int fail = 0;
@@ -40,6 +42,8 @@ void andGateTest(int& successes, int& failures, int64_t& timeTaken, bool silentS
         TEST<bool>("Truth table And gate test", andGate->get(), And::getTruthTableOutput(i), success, fail, true);
         delete [] array;
     }
+
+    componentCounter->addCount();
 
     delete andGate;
 
