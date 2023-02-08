@@ -6,11 +6,12 @@
 #include<chrono>
 
 #include "ComponentCounter.h"
+#include "TestSettings.h"
 
 #include "Xnor.h"
 #include "TestFunctions.h"
 
-void xnorGateTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
+void xnorGateTest(TestSettings* testSettings, ComponentsCounter* componentCounter){
     Xnor* xnorGate = new Xnor();
     int success = 0;
     int fail = 0;
@@ -18,24 +19,24 @@ void xnorGateTest(int& successes, int& failures, int64_t& timeTaken, ComponentsC
     std::chrono::time_point<std::chrono::high_resolution_clock> start_point, end_point;
     start_point = std::chrono::high_resolution_clock::now();
 
-    TEST<std::string>("Initialization Xnor gate no arguments test", xnorGate->toString(), "1", success, fail, silentSuccessLog);
+    TEST<std::string>("Initialization Xnor gate no arguments test", xnorGate->toString(), "1", success, fail, testSettings->silentSuccessLog);
 
     delete xnorGate;
     bool input[Xnor::getInputSize()] = {0,1};
     xnorGate = new Xnor(input);
-    TEST<std::string>("Initialization Xnor gate set test", xnorGate->toString(), "0", success, fail, silentSuccessLog);
+    TEST<std::string>("Initialization Xnor gate set test", xnorGate->toString(), "0", success, fail, testSettings->silentSuccessLog);
 
-    TEST<bool>("Get Xnor gate test", xnorGate->get(), 0, success, fail, silentSuccessLog);
+    TEST<bool>("Get Xnor gate test", xnorGate->get(), 0, success, fail, testSettings->silentSuccessLog);
 
     xnorGate->set(0, 1);
-    TEST<bool>("Set Xnor gate index and bool value test", xnorGate->get(), 1, success, fail, silentSuccessLog);
+    TEST<bool>("Set Xnor gate index and bool value test", xnorGate->get(), 1, success, fail, testSettings->silentSuccessLog);
 
     input[0] = 1;
     input[1] = 0;
     xnorGate->set(input);
-    TEST<bool>("Set Xnor gate values set test", xnorGate->get(), 0, success, fail, silentSuccessLog);
+    TEST<bool>("Set Xnor gate values set test", xnorGate->get(), 0, success, fail, testSettings->silentSuccessLog);
 
-    TEST<int>("Count test", Xnor::getCount(), 1, success, fail, silentSuccessLog);
+    TEST<int>("Count test", Xnor::getCount(), 1, success, fail, testSettings->silentSuccessLog);
 
     for(int i = 0; i < Xnor::getTruthTableRowsCount(); i++){
         auto array = Xnor::getTruthTableInput(i);
@@ -53,9 +54,9 @@ void xnorGateTest(int& successes, int& failures, int64_t& timeTaken, ComponentsC
     auto end = std::chrono::time_point_cast<std::chrono::microseconds>(end_point).time_since_epoch().count(); 
 
     printTestBenchmark(success, fail, (end - start));
-    successes += success;
-    failures += fail;
-    timeTaken += (end - start);
+    testSettings->successes += success;
+    testSettings->failures += fail;
+    testSettings->timeTaken += (end - start);
 }
 
 #endif

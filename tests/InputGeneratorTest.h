@@ -8,7 +8,7 @@
 #include "TestFunctions.h"
 #include "TestData.h"
 
-void inputGeneratorTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
+void inputGeneratorTest(TestSettings* testSettings){
     int success = 0;
     int fail = 0;
 
@@ -18,7 +18,7 @@ void inputGeneratorTest(int& successes, int& failures, int64_t& timeTaken, bool 
     start_point = std::chrono::high_resolution_clock::now();
 
     for(auto i = 0; i < 8; i++){
-        TEST_ARRAY<bool*>("Input generator test", generatedInput->get(i), TEST_DATA::testData3B[i], 3, success, fail, silentSuccessLog);
+        TEST_ARRAY<bool*>("Input generator test", generatedInput->get(i), TEST_DATA::testData3B[i], 3, success, fail, testSettings->silentSuccessLog);
     }
 
     end_point = std::chrono::high_resolution_clock::now();
@@ -28,9 +28,9 @@ void inputGeneratorTest(int& successes, int& failures, int64_t& timeTaken, bool 
     delete generatedInput;
 
     printTestBenchmark(success, fail, (end - start));
-    successes += success;
-    failures += fail;
-    timeTaken += (end - start);
+    testSettings->successes += success;
+    testSettings->failures += fail;
+    testSettings->timeTaken += (end - start);
 }
 
 #endif

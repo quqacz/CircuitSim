@@ -5,6 +5,7 @@
 #include<chrono>
 
 #include "ComponentCounter.h"
+#include "TestSettings.h"
 
 #include "Inverter8Bit.h"
 #include "TestFunctions.h"
@@ -12,7 +13,7 @@
 #include "InputArray.h"
 #include "LoggingUtility.h"
 
-void inverter8BitTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
+void inverter8BitTest(TestSettings* testSettings, ComponentsCounter* componentCounter){
     int success = 0;
     int fail = 0;
 
@@ -34,7 +35,7 @@ void inverter8BitTest(int& successes, int& failures, int64_t& timeTaken, Compone
         inverter->set(input->get(i));
         output->set(input->get(i));
         output->setNot();
-        TEST_ARRAY<bool*>("Inverter8Bit test", inverter->get(), output->getValues(), columns, success, fail, silentSuccessLog);
+        TEST_ARRAY<bool*>("Inverter8Bit test", inverter->get(), output->getValues(), columns, success, fail, testSettings->silentSuccessLog);
     }
 
     inverter->setInv(false);
@@ -42,7 +43,7 @@ void inverter8BitTest(int& successes, int& failures, int64_t& timeTaken, Compone
     for(auto i = 0; i < rows; i++){
         inverter->set(input->get(i));
         output->set(input->get(i));
-        TEST_ARRAY<bool*>("Inverter8Bit test", inverter->get(), input->get(i), columns, success, fail, silentSuccessLog);
+        TEST_ARRAY<bool*>("Inverter8Bit test", inverter->get(), input->get(i), columns, success, fail, testSettings->silentSuccessLog);
     }       
 
     end_point = std::chrono::high_resolution_clock::now();
@@ -56,9 +57,9 @@ void inverter8BitTest(int& successes, int& failures, int64_t& timeTaken, Compone
     delete output;
 
     printTestBenchmark(success, fail, (end - start));
-    successes += success;
-    failures += fail;
-    timeTaken += (end - start);
+    testSettings->successes += success;
+    testSettings->failures += fail;
+    testSettings->timeTaken += (end - start);
 }
 
 #endif

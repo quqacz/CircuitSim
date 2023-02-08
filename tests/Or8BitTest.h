@@ -5,6 +5,7 @@
 #include<chrono>
 
 #include "ComponentCounter.h"
+#include "TestSettings.h"
 
 #include "Or8Bit.h"
 #include "TestFunctions.h"
@@ -12,7 +13,7 @@
 #include "InputArray.h"
 #include "LoggingUtility.h"
 
-void or8BitTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
+void or8BitTest(TestSettings* testSettings, ComponentsCounter* componentCounter){
     int success = 0;
     int fail = 0;
 
@@ -34,7 +35,7 @@ void or8BitTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCou
             or8Bit->setB(input->get(j));
             output->set(input->get(i));
             output->setOr(input->get(j));
-            TEST_ARRAY<bool*>("Or8Bit test", or8Bit->get(), output->getValues(), columns, success, fail, silentSuccessLog);
+            TEST_ARRAY<bool*>("Or8Bit test", or8Bit->get(), output->getValues(), columns, success, fail, testSettings->silentSuccessLog);
 
         }
     }
@@ -49,9 +50,9 @@ void or8BitTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCou
     delete output;
 
     printTestBenchmark(success, fail, (end - start));
-    successes += success;
-    failures += fail;
-    timeTaken += (end - start);
+    testSettings->successes += success;
+    testSettings->failures += fail;
+    testSettings->timeTaken += (end - start);
 }
 
 #endif

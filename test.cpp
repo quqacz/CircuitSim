@@ -4,6 +4,7 @@
 #include "LoggingUtility.h"
 #include "TimeResolution.h"
 #include "ComponentCounter.h"
+#include "TestSettings.h"
 
 #include "InputArrayTest.h"
 #include "ConvertersTest.h"
@@ -31,57 +32,58 @@ int main(){
     int64_t timeTaken = 0;
 
     ComponentsCounter* componentCounter = new ComponentsCounter();
+    TestSettings* testSettings = new TestSettings();
 
     printTestHeader("InputArray Test");
-    InputArrayTest(success, fail, timeTaken);
+    InputArrayTest(testSettings);
 
     printTestHeader("Converters Test");
-    convertersTest(success, fail, timeTaken);
+    convertersTest(testSettings);
 
     printTestHeader("Input Generator Test");
-    inputGeneratorTest(success, fail, timeTaken);
+    inputGeneratorTest(testSettings);
 
     printTestHeader("NotGate Test");
-    notGateTest(success, fail, timeTaken, componentCounter);
+    notGateTest(testSettings, componentCounter);
 
     printTestHeader("AndGate Test");
-    andGateTest(success, fail, timeTaken, componentCounter);
+    andGateTest(testSettings, componentCounter);
 
     printTestHeader("OrGate Test");
-    orGateTest(success, fail, timeTaken, componentCounter);
+    orGateTest(testSettings, componentCounter);
 
     printTestHeader("XorGate Test");
-    xorGateTest(success, fail, timeTaken, componentCounter);
+    xorGateTest(testSettings, componentCounter);
 
     printTestHeader("NandGate Test");
-    nandGateTest(success, fail, timeTaken, componentCounter);
+    nandGateTest(testSettings, componentCounter);
 
     printTestHeader("NorGate Test");
-    norGateTest(success, fail, timeTaken, componentCounter);
+    norGateTest(testSettings, componentCounter);
 
     printTestHeader("XnorGate Test");
-    xnorGateTest(success, fail, timeTaken, componentCounter);
+    xnorGateTest(testSettings, componentCounter);
 
     printTestHeader("Clear8Bit Test");
-    clear8BitTest(success, fail, timeTaken, componentCounter);
+    clear8BitTest(testSettings, componentCounter);
 
     printTestHeader("Inverter8Bit Test");
-    inverter8BitTest(success, fail, timeTaken, componentCounter);
+    inverter8BitTest(testSettings, componentCounter);
 
     printTestHeader("And8Bit Test");
-    and8BitTest(success, fail, timeTaken, componentCounter);
+    and8BitTest(testSettings, componentCounter);
 
     printTestHeader("Or8Bit Test");
-    or8BitTest(success, fail, timeTaken, componentCounter);
+    or8BitTest(testSettings, componentCounter);
 
     printTestHeader("Xor8Bit Test");
-    xor8BitTest(success, fail, timeTaken, componentCounter);
+    xor8BitTest(testSettings, componentCounter);
 
     printTestHeader("Mux2X1 Test");
-    mux2X1Test(success, fail, timeTaken, componentCounter);
+    mux2X1Test(testSettings, componentCounter);
 
     printTestHeader("Test Results");
-    printTestBenchmark(success, fail, timeTaken, TimeFormat::SECONDS);
+    printTestBenchmark(testSettings->successes, testSettings->failures, testSettings->timeTaken, TimeFormat::SECONDS);
 
     printTestHeader("Gates and components created during run");
     componentCounter->print();

@@ -5,6 +5,7 @@
 #include<chrono>
 
 #include "ComponentCounter.h"
+#include "TestSettings.h"
 
 #include "Mux2X1.h"
 #include "TestFunctions.h"
@@ -12,7 +13,7 @@
 #include "InputArray.h"
 #include "LoggingUtility.h"
 
-void mux2X1Test(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
+void mux2X1Test(TestSettings* testSettings, ComponentsCounter* componentCounter){
     int success = 0;
     int fail = 0;
 
@@ -36,7 +37,7 @@ void mux2X1Test(int& successes, int& failures, int64_t& timeTaken, ComponentsCou
             mux2X1->setA(a);
             mux2X1->setB(b);
             output->set(a);
-            TEST_ARRAY<bool*>("Mux2X1 test", mux2X1->get(), output->getValues(), columns, success, fail, silentSuccessLog);
+            TEST_ARRAY<bool*>("Mux2X1 test", mux2X1->get(), output->getValues(), columns, success, fail, testSettings->silentSuccessLog);
 
         }   
     }
@@ -49,7 +50,7 @@ void mux2X1Test(int& successes, int& failures, int64_t& timeTaken, ComponentsCou
             mux2X1->setA(a);
             mux2X1->setB(b);
             output->set(b);
-            TEST_ARRAY<bool*>("Mux2X1 test", mux2X1->get(), output->getValues(), columns, success, fail, silentSuccessLog);
+            TEST_ARRAY<bool*>("Mux2X1 test", mux2X1->get(), output->getValues(), columns, success, fail, testSettings->silentSuccessLog);
 
         }   
     }    
@@ -65,9 +66,9 @@ void mux2X1Test(int& successes, int& failures, int64_t& timeTaken, ComponentsCou
     delete output;
 
     printTestBenchmark(success, fail, (end - start));
-    successes += success;
-    failures += fail;
-    timeTaken += (end - start);
+    testSettings->successes += success;
+    testSettings->failures += fail;
+    testSettings->timeTaken += (end - start);
 }
 
 #endif

@@ -8,7 +8,7 @@
 #include "TestFunctions.h"
 #include "TestData.h"
 
-void convertersTest(int& successes, int& failures, int64_t& timeTaken, bool silentSuccessLog = true){
+void convertersTest(TestSettings* testSettings){
     int success = 0;
     int fail = 0;
 
@@ -29,9 +29,9 @@ void convertersTest(int& successes, int& failures, int64_t& timeTaken, bool sile
     delete [] testInput;
 
     printTestBenchmark(success, fail, (end - start));
-    successes += success;
-    failures += fail;
-    timeTaken += (end - start);
+    testSettings->successes += success;
+    testSettings->failures += fail;
+    testSettings->timeTaken += (end - start);
 }
 
 #endif

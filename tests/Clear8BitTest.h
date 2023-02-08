@@ -5,6 +5,7 @@
 #include<chrono>
 
 #include "ComponentCounter.h"
+#include "TestSettings.h"
 
 #include "Clear8Bit.h"
 #include "TestFunctions.h"
@@ -12,7 +13,7 @@
 #include "InputArray.h"
 #include "LoggingUtility.h"
 
-void clear8BitTest(int& successes, int& failures, int64_t& timeTaken, ComponentsCounter* componentCounter, bool silentSuccessLog = true){
+void clear8BitTest(TestSettings* testSettings, ComponentsCounter* componentCounter){
     int success = 0;
     int fail = 0;
 
@@ -31,14 +32,14 @@ void clear8BitTest(int& successes, int& failures, int64_t& timeTaken, Components
 
     for(auto i = 0; i < rows; i++){
         clear->set(input->get(i));
-        TEST_ARRAY<bool*>("Clear8Bit test", clear->get(), output->getValues(), columns, success, fail, silentSuccessLog);
+        TEST_ARRAY<bool*>("Clear8Bit test", clear->get(), output->getValues(), columns, success, fail, testSettings->silentSuccessLog);
     }
 
     clear->setClr(false);
 
     for(auto i = 0; i < rows; i++){
         clear->set(input->get(i));
-        TEST_ARRAY<bool*>("Clear8Bit test", clear->get(), input->get(i), columns, success, fail, silentSuccessLog);
+        TEST_ARRAY<bool*>("Clear8Bit test", clear->get(), input->get(i), columns, success, fail, testSettings->silentSuccessLog);
     }       
 
     end_point = std::chrono::high_resolution_clock::now();
@@ -52,9 +53,9 @@ void clear8BitTest(int& successes, int& failures, int64_t& timeTaken, Components
     delete output;
 
     printTestBenchmark(success, fail, (end - start));
-    successes += success;
-    failures += fail;
-    timeTaken += (end - start);
+    testSettings->successes += success;
+    testSettings->failures += fail;
+    testSettings->timeTaken += (end - start);
 }
 
 #endif
