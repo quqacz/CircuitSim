@@ -24,7 +24,7 @@
 #include "Or8BitTest.h"
 #include "Xor8BitTest.h"
 #include "Mux2X1Test.h"
-                                        
+
 int main(){
 
     int success = 0;
@@ -81,7 +81,7 @@ int main(){
 
     printTestHeader("Mux2X1 Test");
     mux2X1Test(testSettings, componentCounter);
-                                    
+                                                                                                      
     printTestHeader("Test Results");
     printTestBenchmark(testSettings->successes, testSettings->failures, testSettings->timeTaken, TimeFormat::SECONDS);
 

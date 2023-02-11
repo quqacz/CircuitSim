@@ -18,6 +18,7 @@ const componentTestFileName = `${className}Test.h`
 
 const componentFilePath = `./components/${componentFileName}`
 const componentTestFilePath = `./tests/${componentTestFileName}`
+const componentCounterFilePath = `./utility/ComponentCounter.h`
 
 const componentTestFunctionName = `${testObjectName}Test`
 
@@ -195,15 +196,14 @@ fs.readFile(testFileName, 'utf-8', (err, data)=>{
     const testFunctionIndex = data.lastIndexOf("componentCounter);")
     const testIndexOffset = 20
 
-    const includePath = `#include "${componentFileName}"
+    const includePath = `#include "${componentTestFileName}"
     `
     const testFunction = `
     printTestHeader("${className} Test");
     ${componentTestFunctionName}(testSettings, componentCounter);
     `
 
-    const outputFile = data.slice(0, includeIndex + includeIndexOffset) + includePath + data.slice(includeIndex + includeIndexOffset, testFunctionIndex + testIndexOffset) + testFunction + data.slice(testFunctionIndex + testIndexOffset)
-
+    const outputFile = data.slice(0, includeIndex + includeIndexOffset) + includePath + data.slice(includeIndex + includeIndexOffset + 2, testFunctionIndex + testIndexOffset) + testFunction + data.slice(testFunctionIndex + testIndexOffset)
 
     fs.writeFile(testFileName, outputFile, (err) =>{
         if(err){
@@ -211,6 +211,53 @@ fs.readFile(testFileName, 'utf-8', (err, data)=>{
             return
         }
     })
+})
+
+fs.readFile(componentCounterFilePath, 'utf-8', (err, data) =>{
+    if(err){
+        console.error(err)
+        return
+    }
+
+    const includeIndex = data.lastIndexOf(".h\"")
+    const includeIndexOffset = 4
+
+    const createVariableCounterIndex = data.lastIndexOf("0;")
+    const createCounterVariableOffset = 2
+
+    const incrementCounterIndex = data.lastIndexOf("Count();")
+    const incrementCounterIndexOffset = 8;
+
+    const printCounterIndex = data.lastIndexOf("endl;")
+    const printCounterIndexOffset = 6
+
+    const includePath = `#include "${componentFileName}"
+    `
+    const createCounterVariable = `
+    int ${testObjectName} = 0;
+    `
+    const incrementCounter = `
+    \t${testObjectName} += ${className}::getCount();`
+    const printComponentCount = `
+    \tstd::cout<<"${className} count: " << ${testObjectName} << std::endl;`
+
+    let outputFile = data.slice(0, includeIndex + includeIndexOffset) + includePath
+
+    outputFile += data.slice(includeIndex + includeIndexOffset + 2, createVariableCounterIndex + createCounterVariableOffset) + createCounterVariable
+    
+    outputFile += data.slice(createVariableCounterIndex + createCounterVariableOffset + 2, incrementCounterIndex + incrementCounterIndexOffset) + incrementCounter
+    
+    outputFile += data.slice(incrementCounterIndex + incrementCounterIndexOffset, printCounterIndex + printCounterIndexOffset) + printComponentCount
+    
+    outputFile += data.slice( printCounterIndex + printCounterIndexOffset)
+
+    fs.writeFile(componentCounterFilePath, outputFile, (err) =>{
+        if(err){
+            console.error(err)
+            return
+        }
+    })
+
 })
 
 function isInputValid(componentName, className){
